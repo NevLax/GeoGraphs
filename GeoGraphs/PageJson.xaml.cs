@@ -1,28 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Win32;
+using System.IO;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GeoGraphs
 {
-    /// <summary>
-    /// Логика взаимодействия для PageJson.xaml
-    /// </summary>
     public partial class PageJson : Page
     {
+        ViewGraph vgraph;
         public PageJson()
         {
             InitializeComponent();
+            vgraph = new ViewGraph();
         }
+
+        private void btnser(object sender, RoutedEventArgs e)
+        {
+            var graphs = new ViewGraph();
+            string jsonstring = JsonSerializer.Serialize(graphs);
+            File.WriteAllText(@"D:\graphs.json", jsonstring);
+            MessageBox.Show(jsonstring);
+        }
+
+        private void btndeser(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Json files (*.json)|*json";
+            bool? succ = dialog.ShowDialog();
+            if (succ == true)
+            {
+                try
+                {
+                    string json = File.ReadAllText(dialog.FileName);
+                    vgraph = JsonSerializer.Deserialize<ViewGraph>(json);
+                } catch(Exception exc)
+                {
+                    MessageBox.Show(exc.ToString());
+                }
+            }
+            foreach (var item in vgraph.Graphs)
+            {
+                MessageBox.Show(item.ToString());
+            }
+        }
+
     }
 }

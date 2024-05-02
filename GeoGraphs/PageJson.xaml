@@ -11,5 +11,9 @@
     <Grid Background="#FFD6C7D5">
         <Button Content="Backward" Command="NavigationCommands.BrowseBack" BorderThickness="0" FontSize="18" Height="40" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20"/>
         <Label Content="JsonPage" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Height="60"  HorizontalAlignment="Center">
+            <Button Name="ser" Margin="5" MinWidth="160" Content="Generate Templayte" Click="btnser"/>
+            <Button Name="deser" Margin="5" MinWidth="160" Content="Deserialize" Click="btndeser"/>
+        </StackPanel>
     </Grid>
 </Page>
